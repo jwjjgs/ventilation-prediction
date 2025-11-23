@@ -54,6 +54,6 @@ module.exports = {
   // Purpose: Transform ignore patterns
   // Reason: Exclude files in node_modules but include React Native packages
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|@react-native|@react-navigation|react-native-paper|victory-native|react-native-maps|react-native-svg|@react-native-community|@react-native-async-storage)/)',
+    'node_modules/(?!(react-native|@react-native|react-native-paper|victory-native|react-native-maps|react-native-svg|@react-native-community|@react-native-async-storage)/)',
   ],
 };
