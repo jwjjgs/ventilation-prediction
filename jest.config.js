@@ -51,9 +51,9 @@ module.exports = {
   // 用途：模块文件扩展名
   // 原因：确保能正确解析TypeScript和JavaScript文件
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  // 用途：转换忽略模式
-  // 原因：排除node_modules中的文件
+  // Purpose: Transform ignore patterns
+  // Reason: Exclude files in node_modules but include React Native packages
   transformIgnorePatterns: [
-    'node_modules/(?!(react-native|@react-native|@react-navigation|react-native-paper|victory-native|react-native-maps|@react-native-community|@react-native-async-storage)/)',
+    'node_modules/(?!(react-native|@react-native|@react-navigation|react-native-paper|victory-native|react-native-maps|react-native-svg|@react-native-community|@react-native-async-storage)/)',
   ],
 };

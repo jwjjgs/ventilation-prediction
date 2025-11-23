@@ -58,8 +58,25 @@ jest.mock('react-native-maps', () => {
   };
 });
 
-// 用途：模拟victory-native
-// 原因：测试中不需要渲染真实的图表
+// Purpose: Mock react-native-svg
+// Reason: Tests don't need real SVG rendering
+jest.mock('react-native-svg', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    Svg: (props: Record<string, unknown>) =>
+      React.createElement(View, { testID: 'mock-svg', ...props }),
+    Circle: (props: Record<string, unknown>) =>
+      React.createElement(View, { testID: 'mock-circle', ...props }),
+    Path: (props: Record<string, unknown>) =>
+      React.createElement(View, { testID: 'mock-path', ...props }),
+    G: (props: Record<string, unknown>) =>
+      React.createElement(View, { testID: 'mock-g', ...props }),
+  };
+});
+
+// Purpose: Mock victory-native
+// Reason: Tests don't need real chart rendering
 jest.mock('victory-native', () => ({
   VictoryChart: ({ children }: { children: unknown }) => children,
   VictoryLine: () => null,
