@@ -1,97 +1,143 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 通风预测应用 (Wind2)
 
-# Getting Started
+一个基于 React Native 的粮食通风预测应用，根据 GPS 位置获取天气数据，计算粮食水分和凝结温度，辅助用户判断是否需要通风。
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 功能特性
 
-## Step 1: Start Metro
+- 📍 **自动GPS定位**: 自动获取当前位置，支持手动选择位置
+- 🌾 **10种粮食品种**: 支持大麦、油菜、玉米、燕麦、爆米花、大米、高粱、大豆、向日葵、小麦
+- 🌤️ **实时天气数据**: 集成彩云天气API，获取小时级天气数据
+- 📊 **可视化图表**: 使用 Victory Native 展示温度、湿度、预估水分、凝结温度
+- ⚙️ **灵活配置**: 支持自定义offset参数调整计算结果
+- 💾 **本地存储**: 自动保存位置和设置，下次打开自动恢复
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 技术栈
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **框架**: React Native 0.82.1
+- **语言**: TypeScript
+- **状态管理**: React Hooks
+- **UI组件**: React Native Paper
+- **图表**: Victory Native
+- **地图**: React Native Maps
+- **存储**: AsyncStorage
+- **测试**: Jest + React Testing Library
+- **CI/CD**: GitHub Actions
 
-```sh
-# Using npm
-npm start
+## 项目结构
 
-# OR using Yarn
-yarn start
+```
+src/
+  ├── components/          # UI组件
+  │   ├── GrainTypeSelector.tsx
+  │   ├── LocationPicker.tsx
+  │   ├── LocationPrompt.tsx
+  │   └── WeatherChart.tsx
+  ├── screens/            # 界面
+  │   ├── MainScreen.tsx
+  │   └── SettingsScreen.tsx
+  ├── services/           # 服务层
+  │   ├── locationService.ts
+  │   └── weatherApi.ts
+  ├── utils/              # 工具类
+  │   ├── CalcUtil.ts
+  │   └── storage.ts
+  ├── types/              # TypeScript类型定义
+  └── tests/              # 测试配置
 ```
 
-## Step 2: Build and run your app
+## 快速开始
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 环境要求
+
+- Node.js >= 20
+- Yarn
+- React Native 开发环境（Android Studio / Xcode）
+
+### 安装依赖
+
+```bash
+# 安装依赖
+yarn install
+
+# iOS需要安装CocoaPods依赖
+cd ios && pod install && cd ..
+```
+
+### 配置环境变量
+
+创建 `.env` 文件（已添加到.gitignore）：
+
+```env
+CAIYUN_API_KEY=your_api_key_here
+```
+
+### 运行应用
+
+```bash
+# 启动Metro
+yarn start
+
+# Android
+yarn android
+
+# iOS
+yarn ios
+```
+
+## 测试
+
+项目包含完整的测试用例，覆盖率达到95%以上。
+
+```bash
+# 运行测试
+yarn test
+
+# 运行测试并生成覆盖率报告
+yarn test:coverage
+
+# 监听模式
+yarn test:watch
+
+# CI环境
+yarn test:ci
+```
+
+## 构建
 
 ### Android
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+cd android
+./gradlew assembleRelease  # APK
+./gradlew bundleRelease    # AAB
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+cd ios
+xcodebuild -workspace Wind2.xcworkspace -scheme Wind2 -configuration Release
 ```
 
-Then, and every time you update your native dependencies, run:
+## CI/CD
 
-```sh
-bundle exec pod install
-```
+项目配置了 GitHub Actions 自动构建和测试：
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+- **测试工作流**: 每次push自动运行测试并生成覆盖率报告
+- **Android构建**: 自动构建APK和AAB
+- **iOS构建**: 自动构建IPA
 
-```sh
-# Using npm
-npm run ios
+## 代码规范
 
-# OR using Yarn
-yarn ios
-```
+- **TypeScript**: 严格模式，禁止使用`any`
+- **ESLint**: 使用React Native官方配置
+- **Prettier**: 统一代码格式
+- **测试**: 覆盖率要求≥95%
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 许可证
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+MIT License
 
-## Step 3: Modify your app
+## 贡献
 
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+欢迎提交 Issue 和 Pull Request！
