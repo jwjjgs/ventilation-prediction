@@ -60,17 +60,14 @@ jest.mock('react-native-maps', () => {
 
 // 用途：模拟victory-native
 // 原因：测试中不需要渲染真实的图表
-jest.mock('victory-native', () => {
-  const React = require('react');
-  return {
-    VictoryChart: ({ children }: { children: unknown }) => children,
-    VictoryLine: () => null,
-    VictoryAxis: () => null,
-    VictoryTheme: {
-      material: {},
-    },
-  };
-});
+jest.mock('victory-native', () => ({
+  VictoryChart: ({ children }: { children: unknown }) => children,
+  VictoryLine: () => null,
+  VictoryAxis: () => null,
+  VictoryTheme: {
+    material: {},
+  },
+}));
 
 // 用途：模拟react-native-paper
 // 原因：测试中不需要真实的UI组件渲染
