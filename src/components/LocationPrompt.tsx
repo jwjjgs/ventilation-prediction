@@ -1,9 +1,10 @@
-// 用途：位置切换提示弹窗
-// 原因：当检测到位置变化时，询问用户是否切换到当前位置
+// Purpose: Location change prompt dialog
+// Reason: Ask user if they want to switch to current location when location changes detected
 
 import React from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Button, Portal, Dialog, Paragraph } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import type { Location } from '../types';
 
 interface LocationPromptProps {
@@ -21,16 +22,18 @@ export const LocationPrompt: React.FC<LocationPromptProps> = ({
   onConfirm,
   onCancel,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={onCancel}>
-        <Dialog.Title>位置已变化</Dialog.Title>
+        <Dialog.Title>{t('location.locationChanged')}</Dialog.Title>
         <Dialog.Content>
           <Paragraph style={styles.locationText}>
-            上次位置：
+            {t('location.lastLocation')}:
           </Paragraph>
           <Paragraph style={styles.coordinateText}>
-            经度: {lastLocation.longitude}, 纬度: {lastLocation.latitude}
+            {t('location.longitude')}: {lastLocation.longitude}, {t('location.latitude')}: {lastLocation.latitude}
           </Paragraph>
           {lastLocation.address && (
             <Paragraph style={styles.addressText}>
@@ -38,10 +41,10 @@ export const LocationPrompt: React.FC<LocationPromptProps> = ({
             </Paragraph>
           )}
           <Paragraph style={[styles.locationText, styles.marginTop]}>
-            当前位置：
+            {t('location.currentLocation')}:
           </Paragraph>
           <Paragraph style={styles.coordinateText}>
-            经度: {currentLocation.longitude}, 纬度:{' '}
+            {t('location.longitude')}: {currentLocation.longitude}, {t('location.latitude')}:{' '}
             {currentLocation.latitude}
           </Paragraph>
           {currentLocation.address && (
@@ -50,12 +53,12 @@ export const LocationPrompt: React.FC<LocationPromptProps> = ({
             </Paragraph>
           )}
           <Paragraph style={styles.questionText}>
-            是否切换到当前位置？
+            {t('location.switchToCurrent')}
           </Paragraph>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={onCancel}>取消</Button>
-          <Button onPress={onConfirm}>切换</Button>
+          <Button onPress={onCancel}>{t('common.cancel')}</Button>
+          <Button onPress={onConfirm}>{t('common.confirm')}</Button>
         </Dialog.Actions>
       </Dialog>
     </Portal>

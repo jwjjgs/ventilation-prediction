@@ -1,0 +1,65 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "select": "Select",
+    "loading": "Loading...",
+    "error": "Error",
+    "settings": "Settings",
+    "back": "Back"
+  },
+  "location": {
+    "title": "Location Information",
+    "longitude": "Longitude",
+    "latitude": "Latitude",
+    "selectLocation": "Select Location",
+    "locationChanged": "Location Changed",
+    "lastLocation": "Last Location",
+    "currentLocation": "Current Location",
+    "switchToCurrent": "Switch to current location?",
+    "selectedLocation": "Selected Location"
+  },
+  "grain": {
+    "title": "Select Grain Type",
+    "barley": "Barley",
+    "rapeseed": "Rapeseed",
+    "corn": "Corn",
+    "oats": "Oats",
+    "popcorn": "Popcorn",
+    "rice": "Rice",
+    "sorghum": "Sorghum",
+    "soybean": "Soybean",
+    "sunflower": "Sunflower",
+    "wheat": "Wheat"
+  },
+  "weather": {
+    "fetching": "Fetching weather data...",
+    "fetchError": "Failed to fetch weather data, please try again later",
+    "locationError": "Failed to get location, please check GPS permissions"
+  },
+  "calculation": {
+    "title": "Prediction Results",
+    "details": "Detailed Data",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "estimatedMoisture": "Estimated Moisture",
+    "dewPoint": "Dew Point",
+    "value": "Value"
+  },
+  "settings": {
+    "title": "Calculation Parameters",
+    "offsetDescription": "Offset is used to adjust the baseline value of calculation results, default is 0.",
+    "offset": "Offset"
+  },
+  "language": {
+    "title": "Language",
+    "english": "English",
+    "chinese": "Chinese",
+    "japanese": "Japanese",
+    "french": "French",
+    "korean": "Korean",
+    "russian": "Russian"
+  }
+}
+

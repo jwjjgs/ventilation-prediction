@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import MapView, { Marker, Region, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import type { Location } from '../types';
 
 interface LocationPickerProps {
@@ -18,6 +19,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
   onLocationSelect,
   onCancel,
 }) => {
+  const { t } = useTranslation();
   const [selectedLocation, setSelectedLocation] = useState<Location>(
     initialLocation,
   );
@@ -29,8 +31,8 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
     longitudeDelta: 0.01,
   });
 
-  // 用途：处理地图点击事件
-  // 原因：用户点击地图时选择该位置
+  // Purpose: Handle map press event
+  // Reason: Select location when user taps on map
   const handleMapPress = (event: {
     nativeEvent: { coordinate: { latitude: number; longitude: number } };
   }) => {
@@ -42,8 +44,8 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
     setSelectedLocation(newLocation);
   };
 
-  // 用途：确认选择的位置
-  // 原因：用户确认后返回选择的位置
+  // Purpose: Confirm selected location
+  // Reason: Return selected location after user confirmation
   const handleConfirm = () => {
     onLocationSelect(selectedLocation);
   };
@@ -61,25 +63,25 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({
             latitude: selectedLocation.latitude,
             longitude: selectedLocation.longitude,
           }}
-          title="选择的位置"
+          title={t('location.selectedLocation')}
         />
       </MapView>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>
-          经度: {selectedLocation.longitude.toFixed(4)}
+          {t('location.longitude')}: {selectedLocation.longitude.toFixed(4)}
         </Text>
         <Text style={styles.infoText}>
-          纬度: {selectedLocation.latitude.toFixed(4)}
+          {t('location.latitude')}: {selectedLocation.latitude.toFixed(4)}
         </Text>
       </View>
       <View style={styles.buttonContainer}>
         {onCancel && (
           <Button mode="outlined" onPress={onCancel} style={styles.button}>
-            取消
+            {t('common.cancel')}
           </Button>
         )}
         <Button mode="contained" onPress={handleConfirm} style={styles.button}>
-          确认
+          {t('common.confirm')}
         </Button>
       </View>
     </View>

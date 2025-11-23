@@ -1,0 +1,65 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "select": "Sélectionner",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "settings": "Paramètres",
+    "back": "Retour"
+  },
+  "location": {
+    "title": "Informations de localisation",
+    "longitude": "Longitude",
+    "latitude": "Latitude",
+    "selectLocation": "Sélectionner l'emplacement",
+    "locationChanged": "Localisation modifiée",
+    "lastLocation": "Dernière localisation",
+    "currentLocation": "Localisation actuelle",
+    "switchToCurrent": "Passer à la localisation actuelle ?",
+    "selectedLocation": "Emplacement sélectionné"
+  },
+  "grain": {
+    "title": "Sélectionner le type de grain",
+    "barley": "Orge",
+    "rapeseed": "Colza",
+    "corn": "Maïs",
+    "oats": "Avoine",
+    "popcorn": "Popcorn",
+    "rice": "Riz",
+    "sorghum": "Sorgho",
+    "soybean": "Soja",
+    "sunflower": "Tournesol",
+    "wheat": "Blé"
+  },
+  "weather": {
+    "fetching": "Récupération des données météorologiques...",
+    "fetchError": "Échec de la récupération des données météorologiques, veuillez réessayer plus tard",
+    "locationError": "Échec de l'obtention de la localisation, veuillez vérifier les permissions GPS"
+  },
+  "calculation": {
+    "title": "Résultats de prédiction",
+    "details": "Données détaillées",
+    "temperature": "Température",
+    "humidity": "Humidité",
+    "estimatedMoisture": "Humidité estimée",
+    "dewPoint": "Point de rosée",
+    "value": "Valeur"
+  },
+  "settings": {
+    "title": "Paramètres de calcul",
+    "offsetDescription": "Le décalage est utilisé pour ajuster la valeur de base des résultats de calcul, la valeur par défaut est 0.",
+    "offset": "Décalage"
+  },
+  "language": {
+    "title": "Langue",
+    "english": "Anglais",
+    "chinese": "Chinois",
+    "japanese": "Japonais",
+    "french": "Français",
+    "korean": "Coréen",
+    "russian": "Russe"
+  }
+}
+

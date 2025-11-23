@@ -69,8 +69,24 @@ jest.mock('victory-native', () => ({
   },
 }));
 
-// 用途：模拟react-native-paper
-// 原因：测试中不需要真实的UI组件渲染
+// Purpose: Mock i18next
+// Reason: Tests don't need real translation system
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key: string) => key,
+    i18n: {
+      language: 'en',
+      changeLanguage: jest.fn(),
+    },
+  }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
+}));
+
+// Purpose: Mock react-native-paper
+// Reason: Tests don't need real UI component rendering
 jest.mock('react-native-paper', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const React = require('react');

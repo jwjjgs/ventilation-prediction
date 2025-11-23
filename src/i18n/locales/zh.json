@@ -1,0 +1,65 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "confirm": "确认",
+    "select": "选择",
+    "loading": "加载中...",
+    "error": "错误",
+    "settings": "设置",
+    "back": "返回"
+  },
+  "location": {
+    "title": "位置信息",
+    "longitude": "经度",
+    "latitude": "纬度",
+    "selectLocation": "选择位置",
+    "locationChanged": "位置已变化",
+    "lastLocation": "上次位置",
+    "currentLocation": "当前位置",
+    "switchToCurrent": "是否切换到当前位置？",
+    "selectedLocation": "选择的位置"
+  },
+  "grain": {
+    "title": "选择粮食品种",
+    "barley": "大麦",
+    "rapeseed": "油菜",
+    "corn": "玉米",
+    "oats": "燕麦",
+    "popcorn": "爆米花",
+    "rice": "大米",
+    "sorghum": "高粱",
+    "soybean": "大豆",
+    "sunflower": "向日葵",
+    "wheat": "小麦"
+  },
+  "weather": {
+    "fetching": "正在获取天气数据...",
+    "fetchError": "获取天气数据失败，请稍后重试",
+    "locationError": "获取位置失败，请检查GPS权限"
+  },
+  "calculation": {
+    "title": "预测结果",
+    "details": "详细数据",
+    "temperature": "温度",
+    "humidity": "湿度",
+    "estimatedMoisture": "预估水分",
+    "dewPoint": "凝结温度",
+    "value": "数值"
+  },
+  "settings": {
+    "title": "计算参数",
+    "offsetDescription": "Offset（偏移量）用于调整计算结果的基准值，默认为0。",
+    "offset": "Offset"
+  },
+  "language": {
+    "title": "语言",
+    "english": "英语",
+    "chinese": "中文",
+    "japanese": "日语",
+    "french": "法语",
+    "korean": "韩语",
+    "russian": "俄语"
+  }
+}
+

@@ -2,8 +2,9 @@
 // 原因：可视化展示温度、湿度、预估水分和凝结温度，辅助用户判断是否需要通风
 
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { VictoryChart, VictoryLine, VictoryAxis, VictoryTheme } from 'victory-native';
+import { useTranslation } from 'react-i18next';
 import type { CalculationResult } from '../types';
 
 interface WeatherChartProps {
@@ -13,12 +14,14 @@ interface WeatherChartProps {
 const screenWidth = Dimensions.get('window').width;
 
 export const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
+  const { t, i18n } = useTranslation();
+
   if (data.length === 0) {
     return null;
   }
 
-  // 用途：格式化时间显示
-  // 原因：X轴显示更友好的时间格式
+  // Purpose: Format time display
+  // Reason: Show more friendly time format on X-axis
   const formatTime = (datetime: string): string => {
     const date = new Date(datetime);
     return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:00`;
@@ -65,7 +68,7 @@ export const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
         />
         <VictoryAxis
           dependentAxis
-          label="数值"
+          label={t('calculation.value')}
           style={{
             axisLabel: { padding: 35 },
             tickLabels: { fontSize: 10 },
@@ -77,7 +80,7 @@ export const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
           style={{
             data: { stroke: '#ff6b6b', strokeWidth: 2 },
           }}
-          name="温度"
+          name={t('calculation.temperature')}
         />
         <VictoryLine
           data={chartData}
@@ -85,7 +88,7 @@ export const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
           style={{
             data: { stroke: '#4ecdc4', strokeWidth: 2 },
           }}
-          name="湿度"
+          name={t('calculation.humidity')}
         />
         <VictoryLine
           data={chartData}
@@ -93,7 +96,7 @@ export const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
           style={{
             data: { stroke: '#45b7d1', strokeWidth: 2 },
           }}
-          name="预估水分"
+          name={t('calculation.estimatedMoisture')}
         />
         <VictoryLine
           data={chartData}
@@ -101,25 +104,25 @@ export const WeatherChart: React.FC<WeatherChartProps> = ({ data }) => {
           style={{
             data: { stroke: '#f7b731', strokeWidth: 2 },
           }}
-          name="凝结温度"
+          name={t('calculation.dewPoint')}
         />
       </VictoryChart>
       <View style={styles.legend}>
         <View style={styles.legendItem}>
           <View style={[styles.legendColor, { backgroundColor: '#ff6b6b' }]} />
-          <View style={styles.legendText}>温度</View>
+          <Text style={styles.legendText}>{t('calculation.temperature')}</Text>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendColor, { backgroundColor: '#4ecdc4' }]} />
-          <View style={styles.legendText}>湿度</View>
+          <Text style={styles.legendText}>{t('calculation.humidity')}</Text>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendColor, { backgroundColor: '#45b7d1' }]} />
-          <View style={styles.legendText}>预估水分</View>
+          <Text style={styles.legendText}>{t('calculation.estimatedMoisture')}</Text>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendColor, { backgroundColor: '#f7b731' }]} />
-          <View style={styles.legendText}>凝结温度</View>
+          <Text style={styles.legendText}>{t('calculation.dewPoint')}</Text>
         </View>
       </View>
     </View>

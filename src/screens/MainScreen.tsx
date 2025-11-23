@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { Button, Card, Portal, Provider as PaperProvider } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { CalcUtil } from '../utils/CalcUtil';
 import { getCurrentLocation, isLocationSimilar } from '../services/locationService';
 import { fetchWeatherDataWithRetry } from '../services/weatherApi';
@@ -27,6 +28,7 @@ import type {
 } from '../types';
 
 export const MainScreen: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [location, setLocation] = useState<Location | null>(null);
   const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
   const [grainType, setGrainType] = useState<GrainType | null>(null);
@@ -71,8 +73,8 @@ export const MainScreen: React.FC = () => {
         await saveLastLocation(current);
       }
     } catch (error) {
-      console.error('初始化失败:', error);
-      Alert.alert('错误', '获取位置失败，请检查GPS权限');
+      console.error('Initialization failed:', error);
+      Alert.alert(t('common.error'), t('weather.locationError'));
     }
   };
 
@@ -170,8 +172,8 @@ export const MainScreen: React.FC = () => {
 
       setCalculationResults(results);
     } catch (error) {
-      console.error('获取天气数据失败:', error);
-      Alert.alert('错误', '获取天气数据失败，请稍后重试');
+      console.error('Failed to fetch weather data:', error);
+      Alert.alert(t('common.error'), t('weather.fetchError'));
     } finally {
       setLoading(false);
     }
@@ -191,15 +193,15 @@ export const MainScreen: React.FC = () => {
     <PaperProvider>
       <ScrollView style={styles.container}>
         <Card style={styles.card}>
-          <Card.Title title="位置信息" />
+          <Card.Title title={t('location.title')} />
           <Card.Content>
             {location ? (
               <View>
                 <Text style={styles.locationText}>
-                  经度: {location.longitude.toFixed(4)}
+                  {t('location.longitude')}: {location.longitude.toFixed(4)}
                 </Text>
                 <Text style={styles.locationText}>
-                  纬度: {location.latitude.toFixed(4)}
+                  {t('location.latitude')}: {location.latitude.toFixed(4)}
                 </Text>
                 {location.address && (
                   <Text style={styles.addressText}>{location.address}</Text>
@@ -208,7 +210,7 @@ export const MainScreen: React.FC = () => {
                   mode="outlined"
                   onPress={handleOpenLocationPicker}
                   style={styles.button}>
-                  选择位置
+                  {t('location.selectLocation')}
                 </Button>
               </View>
             ) : (
@@ -218,7 +220,7 @@ export const MainScreen: React.FC = () => {
         </Card>
 
         <Card style={styles.card}>
-          <Card.Title title="选择粮食品种" />
+          <Card.Title title={t('grain.title')} />
           <Card.Content>
             <GrainTypeSelector
               selectedType={grainType}
@@ -230,13 +232,13 @@ export const MainScreen: React.FC = () => {
         {loading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" />
-            <Text style={styles.loadingText}>正在获取天气数据...</Text>
+            <Text style={styles.loadingText}>{t('weather.fetching')}</Text>
           </View>
         )}
 
         {calculationResults.length > 0 && (
           <Card style={styles.card}>
-            <Card.Title title="预测结果" />
+            <Card.Title title={t('calculation.title')} />
             <Card.Content>
               <WeatherChart data={calculationResults} />
             </Card.Content>
@@ -245,25 +247,25 @@ export const MainScreen: React.FC = () => {
 
         {calculationResults.length > 0 && (
           <Card style={styles.card}>
-            <Card.Title title="详细数据" />
+            <Card.Title title={t('calculation.details')} />
             <Card.Content>
               <ScrollView style={styles.dataList}>
                 {calculationResults.map((result, index) => (
                   <View key={index} style={styles.dataItem}>
                     <Text style={styles.dataTime}>
-                      {new Date(result.datetime).toLocaleString('zh-CN')}
+                      {new Date(result.datetime).toLocaleString(i18n.language)}
                     </Text>
                     <Text style={styles.dataText}>
-                      温度: {result.temperature.toFixed(1)}°C
+                      {t('calculation.temperature')}: {result.temperature.toFixed(1)}°C
                     </Text>
                     <Text style={styles.dataText}>
-                      湿度: {result.humidity.toFixed(1)}%
+                      {t('calculation.humidity')}: {result.humidity.toFixed(1)}%
                     </Text>
                     <Text style={styles.dataText}>
-                      预估水分: {result.estimatedMoisture.toFixed(2)}%
+                      {t('calculation.estimatedMoisture')}: {result.estimatedMoisture.toFixed(2)}%
                     </Text>
                     <Text style={styles.dataText}>
-                      凝结温度: {result.dewPoint.toFixed(2)}°C
+                      {t('calculation.dewPoint')}: {result.dewPoint.toFixed(2)}°C
                     </Text>
                   </View>
                 ))}

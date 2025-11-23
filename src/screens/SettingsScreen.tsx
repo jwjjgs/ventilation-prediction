@@ -1,16 +1,19 @@
-// 用途：设置页面
-// 原因：允许用户配置offset等参数
+// Purpose: Settings screen
+// Reason: Allow users to configure parameters like offset
 
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Card, TextInput, Button, Paragraph } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { getSettings, saveSettings } from '../utils/storage';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
 export const SettingsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const [offset, setOffset] = useState<string>('0');
 
-  // 用途：加载保存的设置
-  // 原因：显示当前的配置值
+  // Purpose: Load saved settings
+  // Reason: Display current configuration values
   useEffect(() => {
     loadSettings();
   }, []);
@@ -22,24 +25,25 @@ export const SettingsScreen: React.FC = () => {
     }
   };
 
-  // 用途：保存设置
-  // 原因：持久化用户的配置
+  // Purpose: Save settings
+  // Reason: Persist user configuration
   const handleSave = async () => {
     const offsetValue = parseFloat(offset) || 0;
     await saveSettings({ offset: offsetValue });
-    // 可以显示成功提示
+    // Can show success message
   };
 
   return (
     <ScrollView style={styles.container}>
+      <LanguageSwitcher />
       <Card style={styles.card}>
-        <Card.Title title="计算参数" />
+        <Card.Title title={t('settings.title')} />
         <Card.Content>
           <Paragraph style={styles.description}>
-            Offset（偏移量）用于调整计算结果的基准值，默认为0。
+            {t('settings.offsetDescription')}
           </Paragraph>
           <TextInput
-            label="Offset"
+            label={t('settings.offset')}
             value={offset}
             onChangeText={setOffset}
             keyboardType="numeric"
@@ -50,7 +54,7 @@ export const SettingsScreen: React.FC = () => {
             mode="contained"
             onPress={handleSave}
             style={styles.saveButton}>
-            保存
+            {t('common.save')}
           </Button>
         </Card.Content>
       </Card>
