@@ -72,3 +72,7 @@ yarn-error.log
 .env
 .env.local
 .env.*.local
+
+# Local configuration files
+.yarnrc
+.npmrc
