@@ -75,7 +75,9 @@ jest.mock('victory-native', () => {
 // 用途：模拟react-native-paper
 // 原因：测试中不需要真实的UI组件渲染
 jest.mock('react-native-paper', () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const React = require('react');
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View, Text, TouchableOpacity } = require('react-native');
   return {
     Portal: ({ children }: { children: unknown }) => children,
