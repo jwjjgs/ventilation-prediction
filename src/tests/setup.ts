@@ -3,9 +3,19 @@
 
 // 用途：模拟AsyncStorage
 // 原因：测试中不需要真实的本地存储
-jest.mock('@react-native-async-storage/async-storage', () =>
-  require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
-);
+jest.mock('@react-native-async-storage/async-storage', () => {
+  try {
+    return require('@react-native-async-storage/async-storage/jest/async-storage-mock');
+  } catch {
+    // 如果jest mock不存在，使用简单的mock实现
+    return {
+      getItem: jest.fn(() => Promise.resolve(null)),
+      setItem: jest.fn(() => Promise.resolve()),
+      removeItem: jest.fn(() => Promise.resolve()),
+      clear: jest.fn(() => Promise.resolve()),
+    };
+  }
+});
 
 // 用途：模拟react-native-config
 // 原因：测试中使用模拟的环境变量
@@ -39,24 +49,28 @@ jest.mock('react-native-maps', () => {
   const { View } = require('react-native');
   return {
     __esModule: true,
-    default: React.forwardRef((props: unknown, ref: unknown) => (
-      <View testID="mock-map" {...props} ref={ref} />
-    )),
-    Marker: (props: unknown) => <View testID="mock-marker" {...props} />,
+    default: React.forwardRef((props: Record<string, unknown>, ref: unknown) =>
+      React.createElement(View, { testID: 'mock-map', ...props, ref }),
+    ),
+    Marker: (props: Record<string, unknown>) =>
+      React.createElement(View, { testID: 'mock-marker', ...props }),
     PROVIDER_GOOGLE: 'google',
   };
 });
 
 // 用途：模拟victory-native
 // 原因：测试中不需要渲染真实的图表
-jest.mock('victory-native', () => ({
-  VictoryChart: ({ children }: { children: React.ReactNode }) => children,
-  VictoryLine: () => null,
-  VictoryAxis: () => null,
-  VictoryTheme: {
-    material: {},
-  },
-}));
+jest.mock('victory-native', () => {
+  const React = require('react');
+  return {
+    VictoryChart: ({ children }: { children: unknown }) => children,
+    VictoryLine: () => null,
+    VictoryAxis: () => null,
+    VictoryTheme: {
+      material: {},
+    },
+  };
+});
 
 // 用途：模拟react-native-paper
 // 原因：测试中不需要真实的UI组件渲染
@@ -64,30 +78,30 @@ jest.mock('react-native-paper', () => {
   const React = require('react');
   const { View, Text, TouchableOpacity } = require('react-native');
   return {
-    Portal: ({ children }: { children: React.ReactNode }) => children,
-    Provider: ({ children }: { children: React.ReactNode }) => children,
-    Button: ({ children, onPress, ...props }: any) => (
-      <TouchableOpacity onPress={onPress} {...props}>
-        <Text>{children}</Text>
-      </TouchableOpacity>
-    ),
-    Card: ({ children, ...props }: any) => <View {...props}>{children}</View>,
-    CardTitle: ({ title, ...props }: any) => <Text {...props}>{title}</Text>,
-    CardContent: ({ children, ...props }: any) => <View {...props}>{children}</View>,
-    Chip: ({ children, onPress, selected, ...props }: any) => (
-      <TouchableOpacity onPress={onPress} {...props}>
-        <Text>{children}</Text>
-      </TouchableOpacity>
-    ),
-    TextInput: ({ value, onChangeText, ...props }: any) => (
-      <Text {...props}>{value}</Text>
-    ),
-    Paragraph: ({ children, ...props }: any) => <Text {...props}>{children}</Text>,
-    Dialog: ({ children, visible, ...props }: any) =>
-      visible ? <View {...props}>{children}</View> : null,
-    DialogTitle: ({ children, ...props }: any) => <Text {...props}>{children}</Text>,
-    DialogContent: ({ children, ...props }: any) => <View {...props}>{children}</View>,
-    DialogActions: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    Portal: ({ children }: { children: unknown }) => children,
+    Provider: ({ children }: { children: unknown }) => children,
+    Button: ({ children, onPress, ...props }: Record<string, unknown>) =>
+      React.createElement(TouchableOpacity, { onPress, ...props }, children),
+    Card: ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(View, props, children),
+    CardTitle: ({ title, ...props }: Record<string, unknown>) =>
+      React.createElement(Text, props, title),
+    CardContent: ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(View, props, children),
+    Chip: ({ children, onPress, ...props }: Record<string, unknown>) =>
+      React.createElement(TouchableOpacity, { onPress, ...props }, children),
+    TextInput: ({ value, ...props }: Record<string, unknown>) =>
+      React.createElement(Text, props, value),
+    Paragraph: ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(Text, props, children),
+    Dialog: ({ children, visible, ...props }: Record<string, unknown>) =>
+      visible ? React.createElement(View, props, children) : null,
+    DialogTitle: ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(Text, props, children),
+    DialogContent: ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(View, props, children),
+    DialogActions: ({ children, ...props }: Record<string, unknown>) =>
+      React.createElement(View, props, children),
   };
 });
 
