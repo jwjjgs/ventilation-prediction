@@ -48,4 +48,12 @@ module.exports = {
   // 用途：设置文件
   // 原因：测试前执行一些初始化操作
   setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
+  // 用途：模块文件扩展名
+  // 原因：确保能正确解析TypeScript和JavaScript文件
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  // 用途：转换忽略模式
+  // 原因：排除node_modules中的文件
+  transformIgnorePatterns: [
+    'node_modules/(?!(react-native|@react-native|@react-navigation|react-native-paper|victory-native|react-native-maps|@react-native-community|@react-native-async-storage)/)',
+  ],
 };
