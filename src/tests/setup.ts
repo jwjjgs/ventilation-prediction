@@ -58,16 +58,36 @@ jest.mock('victory-native', () => ({
   },
 }));
 
-// 用途：模拟react-native-paper的Portal
-// 原因：测试中不需要真实的Portal渲染
+// 用途：模拟react-native-paper
+// 原因：测试中不需要真实的UI组件渲染
 jest.mock('react-native-paper', () => {
   const React = require('react');
   const { View, Text, TouchableOpacity } = require('react-native');
-  const actual = jest.requireActual('react-native-paper');
   return {
-    ...actual,
     Portal: ({ children }: { children: React.ReactNode }) => children,
     Provider: ({ children }: { children: React.ReactNode }) => children,
+    Button: ({ children, onPress, ...props }: any) => (
+      <TouchableOpacity onPress={onPress} {...props}>
+        <Text>{children}</Text>
+      </TouchableOpacity>
+    ),
+    Card: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    CardTitle: ({ title, ...props }: any) => <Text {...props}>{title}</Text>,
+    CardContent: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    Chip: ({ children, onPress, selected, ...props }: any) => (
+      <TouchableOpacity onPress={onPress} {...props}>
+        <Text>{children}</Text>
+      </TouchableOpacity>
+    ),
+    TextInput: ({ value, onChangeText, ...props }: any) => (
+      <Text {...props}>{value}</Text>
+    ),
+    Paragraph: ({ children, ...props }: any) => <Text {...props}>{children}</Text>,
+    Dialog: ({ children, visible, ...props }: any) =>
+      visible ? <View {...props}>{children}</View> : null,
+    DialogTitle: ({ children, ...props }: any) => <Text {...props}>{children}</Text>,
+    DialogContent: ({ children, ...props }: any) => <View {...props}>{children}</View>,
+    DialogActions: ({ children, ...props }: any) => <View {...props}>{children}</View>,
   };
 });
 
