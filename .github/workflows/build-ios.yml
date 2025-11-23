@@ -28,7 +28,10 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          # 移除可能存在的代理配置
+          rm -f .npmrc .yarnrc
+          yarn install --frozen-lockfile
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1

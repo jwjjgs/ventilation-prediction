@@ -34,7 +34,10 @@ jobs:
           java-version: '17'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          # 移除可能存在的代理配置
+          rm -f .npmrc .yarnrc
+          yarn install --frozen-lockfile
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
